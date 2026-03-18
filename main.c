@@ -27,8 +27,8 @@ int main() {
     double f = 8.0; 
     
     // p: Physical size of a single pixel on the sensor in mm (Pixel Pitch)
-    // TI-84: 0.003 -> P
-    double p = 0.003; 
+    // TI-84: 0.0036875 -> P
+    double p = 0.0036875; 
     
     // X_center: The middle column of the camera sensor (640 / 2)
     // TI-84: 320 -> C
@@ -59,6 +59,7 @@ int main() {
 
     // Step 1: Camera Depth (r) - Distance to the laser strike
     // TI-84 Formula: (F * B) / ((X - C) * P + F * tan(A)) -> Y_{depth}
+    // TI-84: (8 * 100) / ((400.5 - 320) * 0.0036875 + 8 * tan(30)) -> Y_{depth}
     // Note: I used Y_{depth} here because 'R' is already used for Row.
     //
     //              f * B
@@ -69,6 +70,7 @@ int main() {
     
     // Step 2: Axis Depth (D) - Distance to turntable center
     // TI-84 Formula: B / tan(A) -> D
+    // TI-84: 100 / tan(30) -> D
     //
     //       B
     //   D = -----
@@ -78,6 +80,7 @@ int main() {
     
     // Step 3: Radial Distance from Axis (r_axis)
     // TI-84 Formula: (D - Y_{depth}) / cos(A) -> V
+    // TI-84: (173.21 - Y_{depth}) / cos(30) -> V
     //
     //            D - r
     //   r_axis = -----
@@ -87,6 +90,7 @@ int main() {
     
     // Step 4: True Height (Y) - Account for perspective
     // TI-84 Formula: (R - 240) * P * (Y_{depth} / F) -> Y_{final}
+    // TI-84: (200 - 240) * 0.0036875 * (Y_{depth} / 8) -> Y_{final}
     //
     //   Y = (Row - 240) * p * (r / f)
     //
@@ -94,9 +98,11 @@ int main() {
     
     // Step 5: Cylindrical to Cartesian Projection (X_final, Z_final) 
     // TI-84: (S / 4096) * 2 * pi -> T
+    // TI-84: (1024 / 4096) * 2 * pi -> T
     // Note: Even if TI-84 is in Degree mode, pi is inherently a radian concept. 
     // For the TI-84 to calculate sin/cos correctly in Degree mode, convert T to degrees: 
     // TI-84: (S / 4096) * 360 -> T
+    // TI-84: (1024 / 4096) * 360 -> T
     //
     //            Step
     //   theta = ------ * 2 * PI
@@ -109,6 +115,7 @@ int main() {
     
     // TI-84: V * cos(T) -> X_{final}
     // TI-84: V * sin(T) -> Z_{final}
+    // Note: T should be 90 degrees from step 5, so cos(90)=0, sin(90)=1
     double X_final = r_axis * cos(theta);
     double Z_final = r_axis * sin(theta);
 

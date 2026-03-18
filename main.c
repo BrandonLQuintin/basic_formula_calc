@@ -57,32 +57,56 @@ int main() {
     // 3. THE MATHEMATICAL PIPELINE
     // ==========================================
 
-    // Step 1: Camera Depth (r) - Distance to the laser strike [cite: 20]
+    // Step 1: Camera Depth (r) - Distance to the laser strike
     // TI-84 Formula: (F * B) / ((X - C) * P + F * tan(A)) -> Y_{depth}
     // Note: I used Y_{depth} here because 'R' is already used for Row.
+    //
+    //              f * B
+    //   r = -----------------------
+    //       (Xc - X_center) * p + f * tan(a)
+    //
     double r = (f * B) / ((X_c - X_center) * p + f * tan(alpha_rad));
     
-    // Step 2: Axis Depth (D) - Distance to turntable center [cite: 21]
+    // Step 2: Axis Depth (D) - Distance to turntable center
     // TI-84 Formula: B / tan(A) -> D
+    //
+    //       B
+    //   D = -----
+    //       tan(a)
+    //
     double D = B / tan(alpha_rad);
     
-    // Step 3: Radial Distance from Axis (r_axis) [cite: 22]
+    // Step 3: Radial Distance from Axis (r_axis)
     // TI-84 Formula: (D - Y_{depth}) / cos(A) -> V
+    //
+    //            D - r
+    //   r_axis = -----
+    //            cos(a)
+    //
     double r_axis = (D - r) / cos(alpha_rad);
     
-    // Step 4: True Height (Y) - Account for perspective [cite: 24]
+    // Step 4: True Height (Y) - Account for perspective
     // TI-84 Formula: (R - 240) * P * (Y_{depth} / F) -> Y_{final}
+    //
+    //   Y = (Row - 240) * p * (r / f)
+    //
     double Y = (Row - 240.0) * p * (r / f);
     
     // Step 5: Cylindrical to Cartesian Projection (X_final, Z_final) 
-    // Convert step count to an angle (Theta). 
     // TI-84: (S / 4096) * 2 * pi -> T
     // Note: Even if TI-84 is in Degree mode, pi is inherently a radian concept. 
     // For the TI-84 to calculate sin/cos correctly in Degree mode, convert T to degrees: 
     // TI-84: (S / 4096) * 360 -> T
+    //
+    //            Step
+    //   theta = ------ * 2 * PI
+    //            4096
+    //
+    //   X_final = r_axis * cos(theta)
+    //   Z_final = r_axis * sin(theta)
+    //
     double theta = (Step / 4096.0) * 2.0 * PI;
     
-    // Calculate final X and Z coordinates 
     // TI-84: V * cos(T) -> X_{final}
     // TI-84: V * sin(T) -> Z_{final}
     double X_final = r_axis * cos(theta);

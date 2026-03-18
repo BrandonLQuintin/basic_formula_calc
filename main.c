@@ -43,7 +43,7 @@ int main() {
     // X_c: The sub-pixel column where the laser is brightest
     // TI-84: 400.5 -> X
     double X_c = 400.5; 
-    z
+    
     // Row: The current horizontal row being processed
     // TI-84: 200 -> R
     double Row = 200.0; 

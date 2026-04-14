@@ -16,8 +16,8 @@ int main() {
     
     // alpha_deg: Angle of the laser pointing inward (Degrees)
     // TI-84: Ensure your calculator is in DEGREE mode! Press [MODE], select [DEGREE].
-    // TI-84: 30 -> A
-    double alpha_deg = 30.0; 
+    // TI-84: 20 -> A
+    double alpha_deg = 20.0; 
     
     // Convert degrees to radians for C's math functions
     double alpha_rad = alpha_deg * (PI / 180.0); 
@@ -27,12 +27,13 @@ int main() {
     double f = 8.0; 
     
     // p: Physical size of a single pixel on the sensor in mm (Pixel Pitch)
-    // TI-84: 0.0036875 -> P
-    double p = 0.0036875; 
+    // OV7670 QVGA: 0.0072 mm
+    // TI-84: 0.0072 -> P
+    double p = 0.0072; 
     
-    // X_center: The middle column of the camera sensor (640 / 2)
-    // TI-84: 320 -> C
-    double X_center = 320.0; 
+    // X_center: The middle column of the camera sensor (320 / 2 for QVGA)
+    // TI-84: 160 -> C
+    double X_center = 160.0; 
 
 
     // ==========================================
@@ -89,12 +90,12 @@ int main() {
     double r_axis = (D - r) / cos(alpha_rad);
     
     // Step 4: True Height (Y) - Account for perspective
-    // TI-84 Formula: (R - 240) * P * (Y_{depth} / F) -> Y_{final}
-    // TI-84: (200 - 240) * 0.0036875 * (Y_{depth} / 8) -> Y_{final}
+    // TI-84 Formula: (R - 120) * P * (Y_{depth} / F) -> Y_{final}
+    // TI-84: (200 - 120) * 0.0036875 * (Y_{depth} / 8) -> Y_{final}
     //
-    //   Y = (Row - 240) * p * (r / f)
+    //   Y = (Row - 120) * p * (r / f)
     //
-    double Y = (Row - 240.0) * p * (r / f);
+    double Y = (Row - 120.0) * p * (r / f);
     
     // Step 5: Cylindrical to Cartesian Projection (X_final, Z_final) 
     // TI-84: (S / 4096) * 2 * pi -> T

@@ -20,7 +20,7 @@ int main() {
     double alpha_rad = alpha_deg * (PI / 180.0); 
     
     // f: Focal length of the camera lens in mm
-    double f = 8.0; 
+    double f = 17.5; 
     
     // p: Physical size of a single pixel on the sensor in mm (Pixel Pitch)
     // OV7670 QVGA: 0.0072 mm

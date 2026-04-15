@@ -36,13 +36,13 @@ int main() {
     // This is the data we receive from the microcontroller.
     
     // X_c: The sub-pixel column where the laser is brightest (QVGA: 0-319)
-    double X_c = 200.5; 
+    double X_c = 178; 
     
     // Row: The current horizontal row being processed
     double Row = 200.0; 
     
     // Step: Current motor position (out of 4096 steps per revolution)
-    double Step = 1024.0; 
+    double Step = 0; 
 
 
     // ==========================================
@@ -77,7 +77,7 @@ int main() {
     //
     //   Y = (Row - 120) * p * (r / f)
     //
-    double Y = (Row - 120.0) * p * (r / f);
+    double Y = -(Row - 120.0) * p * (r / f);
     
     // Step 5: Cylindrical to Cartesian Projection (X_final, Z_final) 
     //
